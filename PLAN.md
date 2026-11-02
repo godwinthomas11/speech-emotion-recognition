@@ -1,7 +1,7 @@
 # Project Plan: Speaker-Independent Speech Emotion Recognition
 
 **Course:** Pattern Recognition (MOOC-based), CCA1 (35 marks) → continues into CCA2 (35 marks)
-**Group 19:** Aryan Gavali (1032240154) · Godwin Thomas (1032240162) · Sarthak Vyavahare (PRN: *to add*) · Praveet Gupta (1032240179)
+**Group 19:** Aryan Gavali (1032240154) · Godwin Thomas (1032240162) · Sarthak Vyavahare (1032240163) · Praveet Gupta (1032240179)
 **Plan created:** 2 November 2026
 **Project folder:** `C:\Users\godwi\speech-emotion-recognition`
 
@@ -14,18 +14,18 @@ Update this table after every step. A step only moves to ✅ after its quality g
 | # | Step | Status | Notes |
 |---|------|--------|-------|
 | 0 | Plan and runbook (this file) | ✅ Done | |
-| 1 | Fill row 19 of the shared sheet | ⏳ Godwin | Overdue since 31 Oct; text is in §9 |
+| 1 | Fill row 19 of the shared sheet | ✅ Done | Filled by Godwin on 2 Nov |
 | 2 | Environment and repo skeleton | ✅ Done | `.venv` (Python 3.11), pinned `requirements.txt`, `src/ser` package, git initialised (nothing committed yet) |
 | 3 | Download dataset and run EDA | ✅ Done | 1,440 clips verified; senior review passed (no leakage) | Zenodo zip verified: 208,468,073 bytes, MD5 `bc696df6…ef8a`, licence CC BY-NC-SA 4.0 |
 | 4 | Feature extraction → `features.csv` | ✅ Done | 190 features, 2.5 MB, pitch fallback for 13 clips |
-| 5 | Evaluation protocol and baselines | ⬜ | |
-| 6 | Solution 1: Mutual Information + SVM | ⬜ | |
-| 7 | Solution 2: RFE + Random Forest | ⬜ | |
-| 8 | Solution 3: Genetic Algorithm + MLP | ⬜ | |
-| 9 | Comparison, statistics and figures | ⬜ | |
-| 10 | Quality review and clean re-run | ⬜ | |
-| 11 | GitHub push and CCA1 form submission | ⬜ | |
-| 12 | CCA2: paper support and graphical abstract | ⬜ | Later |
+| 5 | Evaluation protocol and baselines | ✅ Done | Nested 6×3 actor-wise CV, 1-SE rule for k |
+| 6 | Solution 1: Mutual Information + SVM | ✅ Done | F1 0.522, 102 features |
+| 7 | Solution 2: RFE + Random Forest | ✅ Done | F1 0.473, 67 features |
+| 8 | Solution 3: Genetic Algorithm + MLP | ✅ Done | F1 0.511, 108 features |
+| 9 | Comparison, statistics and figures | ✅ Done | McNemar+Holm, ablation, leakage, speaker-norm |
+| 10 | Quality review and clean re-run | ✅ Done | Two senior-review passes; all numbers verified |
+| 11 | GitHub push and CCA1 form submission | ✅ Pushed | Godwin submits the forms |
+| 12 | CCA2: paper support and graphical abstract | ✅ Draft ready | Group rewrites in own words, runs checks |
 
 ---
 

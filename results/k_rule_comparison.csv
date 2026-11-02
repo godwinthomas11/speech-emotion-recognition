@@ -1,0 +1,5 @@
+Solution,k rule,Mean k,Accuracy,Macro-F1,UAR
+S1: MI + SVM,Highest inner score (first run),183.3,0.573,0.558,0.568
+S1: MI + SVM,One-standard-error rule (final),101.7,0.538,0.522,0.531
+S2: RFE + RF,Highest inner score (first run),120.0,0.517,0.49,0.51
+S2: RFE + RF,One-standard-error rule (final),66.7,0.499,0.473,0.491

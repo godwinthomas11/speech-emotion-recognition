@@ -1,0 +1,5 @@
+Model,Protocol,Accuracy
+SVM (RBF),Random split (actors shared),0.7659722222222223
+SVM (RBF),Speaker-independent (ours),0.56875
+Random Forest,Random split (actors shared),0.6458333333333334
+Random Forest,Speaker-independent (ours),0.5166666666666667

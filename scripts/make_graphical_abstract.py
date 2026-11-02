@@ -72,12 +72,12 @@ for (s, b, name, short), y in zip(pairs, ys):
     for j, (val, color, lab) in enumerate([
             (bf.macro_f1.mean(), GREY, f"{short}, all 190 features"),
             (sf.macro_f1.mean(), SOLUTION_COLORS[name], f"{name.split(': ')[1]}, {sf.n_features.mean():.0f} features")]):
-        yy = y + 0.13 - j * 0.075
+        yy = y + 0.12 - j * 0.09
         ax.add_patch(FancyBboxPatch((rx, yy), rw * val / vmax, 0.05, boxstyle="round,pad=0,rounding_size=0.006",
                                     facecolor=color, edgecolor="none"))
         ax.text(rx + rw * val / vmax + 0.006, yy + 0.025, f"{val:.3f}", va="center", fontsize=9.5,
                 fontweight="bold", color=INK)
-        ax.text(rx, yy + 0.064, lab, fontsize=8, color=INK_2)
+        ax.text(rx, yy + 0.058, lab, fontsize=8, color=INK_2)
     arrow(ax, 0.49, y + 0.11, 0.553, y + 0.11)
 
 # Column 4: key messages
@@ -87,12 +87,16 @@ gap = leak.pivot(index="Model", columns="Protocol", values="Accuracy")
 rand_col = [c for c in gap.columns if c.startswith("Random")][0]
 spk_col = [c for c in gap.columns if c.startswith("Speaker")][0]
 svm_gap = gap.loc["SVM (RBF)", rand_col] - gap.loc["SVM (RBF)", spk_col]
-msgs = (f"Best: {best_name}\n"
-        f"accuracy {folds[best].accuracy.mean():.1%}, macro-F1 {folds[best].macro_f1.mean():.3f}\n"
+abl = pd.read_csv(RESULTS_DIR / "ablation_selector_x_classifier.csv", index_col=0)
+rfe_svm = abl.loc["RFE (RF importances)", "SVM"]
+msgs = (f"S1 and S3 perform comparably\n"
+        f"macro-F1 {folds['S1'].macro_f1.mean():.3f} / {folds['S3'].macro_f1.mean():.3f}\n"
         f"(chance = 12.5 %)\n\n"
-        f"Feature selection kept\n{min(folds[k].n_features.mean() for k in ['S1', 'S2', 'S3']):.0f}–"
+        f"Selection kept only\n{min(folds[k].n_features.mean() for k in ['S1', 'S2', 'S3']):.0f}–"
         f"{max(folds[k].n_features.mean() for k in ['S1', 'S2', 'S3']):.0f} of 190 features\n\n"
-        f"Random train/test splits\noverstate SVM accuracy by\n{svm_gap * 100:.0f} percentage points")
+        f"GA selection improved the MLP\n{folds['B_MLP'].macro_f1.mean():.3f} → {folds['S3'].macro_f1.mean():.3f}\n\n"
+        f"Highest macro-F1: SVM on\nRFE-selected features\n{rfe_svm:.3f} (post-hoc swap)\n\n"
+        f"Random train/test splits\noverstate SVM accuracy\nby {svm_gap * 100:.0f} percentage points")
 box(ax, 0.83, 0.10, 0.155, 0.74, "Key findings", msgs, "#0d366b")
 
 FIGURES_DIR.mkdir(exist_ok=True)

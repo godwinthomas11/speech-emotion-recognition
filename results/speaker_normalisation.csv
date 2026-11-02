@@ -1,0 +1,5 @@
+Model,Mean k,Macro-F1 (main protocol),Macro-F1 (+ speaker normalisation),Accuracy (+ speaker normalisation),Gain
+Baseline SVM (all features),190.0,0.554,0.617,0.63,0.063
+S1: MI + SVM,93.3,0.522,0.61,0.621,0.088
+Baseline RF (all features),190.0,0.492,0.614,0.632,0.122
+Baseline MLP (all features),190.0,0.473,0.57,0.622,0.097

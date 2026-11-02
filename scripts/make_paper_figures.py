@@ -49,10 +49,10 @@ def arr(x0, y0, x1, y1):
     ax.add_patch(FancyArrowPatch((x0, y0), (x1, y1), arrowstyle="-|>", mutation_scale=7, color="#8a8984", lw=0.9))
 
 
-node(0.01, 0.62, 0.20, 0.30, "RAVDESS\nspeech\n1,440 clips\n24 actors", INK_2)
-node(0.01, 0.10, 0.20, 0.42, "Pre-processing\nmono, 22.05 kHz\ntrim silence\npeak-normalise", INK_2)
+node(0.01, 0.62, 0.20, 0.30, "RAVDESS\nspeech\n1,440 clips\n24 actors", INK_2, fs=6.0)
+node(0.01, 0.10, 0.20, 0.42, "Pre-processing\nmono, 22.05 kHz\ntrim silence\npeak-normalise", INK_2, fs=5.6)
 arr(0.11, 0.62, 0.11, 0.525)
-node(0.26, 0.10, 0.18, 0.82, "Feature\nextraction\n\nMFCC+Δ+ΔΔ\nspectral\nchroma\ntonnetz\npitch, energy\nduration\n\n190-D", INK_2)
+node(0.255, 0.10, 0.19, 0.82, "Feature\nextraction\n\nMFCC+Δ+ΔΔ\nspectral\nchroma\ntonnetz\npitch, energy\nduration\n\n190-D", INK_2, fs=5.8)
 arr(0.21, 0.31, 0.258, 0.31)
 ys = [0.68, 0.39, 0.10]
 for (k, name), y, txt in zip(S.items(), ys, ["MI ranking\n(filter)", "RFE with RF\n(wrapper)", "Genetic\nAlgorithm"]):
@@ -61,7 +61,7 @@ for (k, name), y, txt in zip(S.items(), ys, ["MI ranking\n(filter)", "RFE with R
     arr(0.44, 0.51, 0.498, y + 0.12)
     arr(0.67, y + 0.12, 0.718, y + 0.12)
     arr(0.84, y + 0.12, 0.878, 0.51)
-node(0.88, 0.25, 0.115, 0.52, "Unseen\nactors\n\nacc.\nmacro-F1\nUAR", "#0d366b")
+node(0.875, 0.25, 0.12, 0.52, "Test on\nunseen\nactors\n\nAcc.\nMacro-F1\nUAR", "#0d366b", fs=5.4)
 ax.add_patch(FancyBboxPatch((0.475, 0.03), 0.39, 0.93, boxstyle="round,pad=0,rounding_size=0.02",
                             facecolor="none", edgecolor="#c3c2b7", linewidth=0.8, linestyle=(0, (3, 2))))
 ax.text(0.67, 0.965, "nested, actor-wise CV (refit per training fold)", ha="center", va="bottom", fontsize=5.8, color=INK_2)
@@ -98,13 +98,20 @@ ax.set_ylabel("Macro-F1 (unseen actors)")
 ax.legend(loc="lower right")
 save(fig, "paper_fig3_k_curve")
 
-# ---- Fig 4: GA convergence ------------------------------------------------
+# ---- Fig 4: GA convergence (mean over the 6 folds, band = min-max) -------
+from matplotlib.ticker import MaxNLocator  # noqa: E402
+
 h = pd.read_csv(RESULTS_DIR / "s3_ga_history.csv")
+gens = range(int(h.generation.max()) + 1)
+piv = lambda col: h.pivot(index="generation", columns="fold", values=col).reindex(gens).ffill()  # noqa: E731
+best_f, mean_f, size = piv("best_fitness"), piv("mean_fitness"), piv("best_n_features")
 fig, ax1 = plt.subplots(figsize=(W, 1.9))
-for f, g in h.groupby("fold"):
-    ax1.plot(g.generation, g.best_fitness, color=SOLUTION_COLORS[S["s3"]], lw=1.1, alpha=0.9, label="best" if f == 0 else None)
-    ax1.plot(g.generation, g.mean_fitness, color=GREY, lw=0.9, ls="--", alpha=0.9, label="population mean" if f == 0 else None)
-ax1.set_xlabel("Generation"); ax1.set_ylabel("Fitness")
+c = SOLUTION_COLORS[S["s3"]]
+ax1.fill_between(best_f.index, best_f.min(1), best_f.max(1), color=c, alpha=0.15, lw=0)
+ax1.plot(best_f.index, best_f.mean(1), color=c, lw=1.6, label="best individual")
+ax1.plot(mean_f.index, mean_f.mean(1), color=GREY, lw=1.3, ls="--", label="population mean")
+ax1.set_xlabel("Generation"); ax1.set_ylabel("Fitness (mean of 6 folds)")
+ax1.xaxis.set_major_locator(MaxNLocator(integer=True))
 ax1.legend(loc="lower right")
 save(fig, "paper_fig4_ga_convergence")
 

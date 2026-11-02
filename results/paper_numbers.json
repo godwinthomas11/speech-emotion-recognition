@@ -1,0 +1,929 @@
+{
+ "runs": {
+  "s1": {
+   "name": "S1: MI + SVM",
+   "acc": 0.5381944444444443,
+   "acc_sd": 0.06005880605860545,
+   "f1": 0.5220714461344734,
+   "f1_sd": 0.058793420832779206,
+   "uar": 0.5305989583333334,
+   "uar_sd": 0.053640460390319326,
+   "k": 101.66666666666667,
+   "k_sd": 33.71448748930742,
+   "k_min": 60,
+   "k_max": 150,
+   "sel_s": 3.3862767616907754,
+   "fit_s": 0.11552464962005615,
+   "pred_ms": 0.20442306995391846,
+   "pooled_acc": 0.5381944444444444,
+   "pooled_f1": 0.5288546279316425,
+   "params": [
+    {
+     "C": 10.0,
+     "gamma_mult": 0.25
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 1.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 1.0
+    },
+    {
+     "C": 10.0,
+     "gamma_mult": 1.0
+    }
+   ],
+   "fold_acc": [
+    0.554,
+    0.492,
+    0.567,
+    0.5,
+    0.479,
+    0.638
+   ]
+  },
+  "s2": {
+   "name": "S2: RFE + RF",
+   "acc": 0.4986111111111111,
+   "acc_sd": 0.09375154319717545,
+   "f1": 0.4728502946898286,
+   "f1_sd": 0.09973407184445973,
+   "uar": 0.4908854166666667,
+   "uar_sd": 0.09602279731483908,
+   "k": 66.66666666666667,
+   "k_sd": 48.02776974487434,
+   "k_min": 30,
+   "k_max": 150,
+   "sel_s": 15.080579121907553,
+   "fit_s": 1.6952004035313923,
+   "pred_ms": 0.0787322719891866,
+   "pooled_acc": 0.4986111111111111,
+   "pooled_f1": 0.48190538729762394,
+   "params": [
+    {
+     "min_samples_leaf": 3,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 3,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 1,
+     "max_features": 0.2
+    },
+    {
+     "min_samples_leaf": 1,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 1,
+     "max_features": 0.2
+    },
+    {
+     "min_samples_leaf": 1,
+     "max_features": 0.2
+    }
+   ],
+   "fold_acc": [
+    0.588,
+    0.421,
+    0.562,
+    0.375,
+    0.454,
+    0.592
+   ]
+  },
+  "s3": {
+   "name": "S3: GA + MLP",
+   "acc": 0.5430555555555555,
+   "acc_sd": 0.07210460508229743,
+   "f1": 0.5107368219678484,
+   "f1_sd": 0.07654938781518103,
+   "uar": 0.5221354166666666,
+   "uar_sd": 0.07128950841755516,
+   "k": 108.16666666666667,
+   "k_sd": 5.84522597225006,
+   "k_min": 105,
+   "k_max": 120,
+   "sel_s": 647.0373186667761,
+   "fit_s": 1.6824561754862468,
+   "pred_ms": 0.01043296522564358,
+   "pooled_acc": 0.5430555555555555,
+   "pooled_f1": 0.519354364238208,
+   "params": [
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 3.0
+    },
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 3.0
+    },
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 10.0
+    },
+    {
+     "hidden": [
+      128
+     ],
+     "alpha": 3.0
+    },
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 1.0
+    },
+    {
+     "hidden": [
+      128
+     ],
+     "alpha": 1.0
+    }
+   ],
+   "fold_acc": [
+    0.604,
+    0.5,
+    0.55,
+    0.488,
+    0.467,
+    0.65
+   ],
+   "ga_gens": 19.166666666666668,
+   "ga_evals": 355.5
+  },
+  "baseline_svm": {
+   "name": "Baseline SVM",
+   "acc": 0.5694444444444445,
+   "acc_sd": 0.07658812401894136,
+   "f1": 0.5544284427869838,
+   "f1_sd": 0.08101184607531962,
+   "uar": 0.5625,
+   "uar_sd": 0.08227271010562981,
+   "k": 190.0,
+   "k_sd": 0.0,
+   "k_min": 190,
+   "k_max": 190,
+   "sel_s": 0.00016681353251139322,
+   "fit_s": 0.21234333515167236,
+   "pred_ms": 0.21077593167622885,
+   "pooled_acc": 0.5694444444444444,
+   "pooled_f1": 0.5635808682738201,
+   "params": [
+    {
+     "C": 1.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 1.0
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 1.0,
+     "gamma_mult": 1.0
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 1.0,
+     "gamma_mult": 1.0
+    }
+   ],
+   "fold_acc": [
+    0.621,
+    0.479,
+    0.608,
+    0.504,
+    0.529,
+    0.675
+   ]
+  },
+  "baseline_rf": {
+   "name": "Baseline RF",
+   "acc": 0.517361111111111,
+   "acc_sd": 0.06569165486207909,
+   "f1": 0.49207854947407803,
+   "f1_sd": 0.07414553288037695,
+   "uar": 0.509765625,
+   "uar_sd": 0.07060486092840032,
+   "k": 190.0,
+   "k_sd": 0.0,
+   "k_min": 190,
+   "k_max": 190,
+   "sel_s": 0.0,
+   "fit_s": 3.835197846094767,
+   "pred_ms": 0.11541710959540474,
+   "pooled_acc": 0.5173611111111112,
+   "pooled_f1": 0.49878462653075034,
+   "params": [
+    {
+     "min_samples_leaf": 1,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 1,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 3,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 1,
+     "max_features": 0.2
+    },
+    {
+     "min_samples_leaf": 3,
+     "max_features": 0.2
+    },
+    {
+     "min_samples_leaf": 1,
+     "max_features": 0.2
+    }
+   ],
+   "fold_acc": [
+    0.588,
+    0.446,
+    0.542,
+    0.442,
+    0.5,
+    0.588
+   ]
+  },
+  "baseline_mlp": {
+   "name": "Baseline MLP",
+   "acc": 0.5333333333333333,
+   "acc_sd": 0.06043821454822916,
+   "f1": 0.4734654351570681,
+   "f1_sd": 0.05401430354809716,
+   "uar": 0.5026041666666666,
+   "uar_sd": 0.05549991788657589,
+   "k": 190.0,
+   "k_sd": 0.0,
+   "k_min": 190,
+   "k_max": 190,
+   "sel_s": 0.0,
+   "fit_s": 1.338302771250407,
+   "pred_ms": 0.00451207160949707,
+   "pooled_acc": 0.5333333333333333,
+   "pooled_f1": 0.48472857677485964,
+   "params": [
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 10.0
+    },
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 3.0
+    },
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 10.0
+    },
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 10.0
+    },
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 10.0
+    },
+    {
+     "hidden": [
+      256,
+      128
+     ],
+     "alpha": 10.0
+    }
+   ],
+   "fold_acc": [
+    0.579,
+    0.504,
+    0.579,
+    0.483,
+    0.454,
+    0.6
+   ]
+  },
+  "ablation_mi_rf": {
+   "name": "MI + RF",
+   "acc": 0.5104166666666666,
+   "acc_sd": 0.07334990343097483,
+   "f1": 0.48771437631623527,
+   "f1_sd": 0.078240893686102,
+   "uar": 0.5065104166666666,
+   "uar_sd": 0.07471734933512207,
+   "k": 90.0,
+   "k_sd": 30.331501776206203,
+   "k_min": 40,
+   "k_max": 120,
+   "sel_s": 3.119974056879679,
+   "fit_s": 3.5647534132003784,
+   "pred_ms": 0.23681653870476613,
+   "pooled_acc": 0.5104166666666666,
+   "pooled_f1": 0.4917552949209519,
+   "params": [
+    {
+     "min_samples_leaf": 3,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 3,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 3,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 3,
+     "max_features": 0.2
+    },
+    {
+     "min_samples_leaf": 3,
+     "max_features": "sqrt"
+    },
+    {
+     "min_samples_leaf": 1,
+     "max_features": "sqrt"
+    }
+   ],
+   "fold_acc": [
+    0.571,
+    0.421,
+    0.517,
+    0.454,
+    0.483,
+    0.617
+   ]
+  },
+  "ablation_rfe_svm": {
+   "name": "RFE + SVM",
+   "acc": 0.5833333333333334,
+   "acc_sd": 0.07226494462892934,
+   "f1": 0.5684183370681843,
+   "f1_sd": 0.07246173859705442,
+   "uar": 0.5794270833333334,
+   "uar_sd": 0.07467649413330588,
+   "k": 80.0,
+   "k_sd": 12.649110640673518,
+   "k_min": 60,
+   "k_max": 100,
+   "sel_s": 20.918324033419292,
+   "fit_s": 0.10426517327626546,
+   "pred_ms": 0.17085224390029907,
+   "pooled_acc": 0.5833333333333334,
+   "pooled_f1": 0.5755939846954278,
+   "params": [
+    {
+     "C": 3.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 1.0
+    },
+    {
+     "C": 3.0,
+     "gamma_mult": 0.5
+    },
+    {
+     "C": 1.0,
+     "gamma_mult": 1.0
+    }
+   ],
+   "fold_acc": [
+    0.642,
+    0.504,
+    0.621,
+    0.5,
+    0.562,
+    0.671
+   ]
+  }
+ },
+ "per_class": {
+  "s1": {
+   "neutral": 0.3883495145631068,
+   "calm": 0.6365914786967418,
+   "happy": 0.5595567867036011,
+   "sad": 0.3504043126684636,
+   "angry": 0.6045340050377834,
+   "fearful": 0.5247524752475248,
+   "disgust": 0.5626598465473146,
+   "surprised": 0.603988603988604
+  },
+  "s2": {
+   "neutral": 0.3317972350230415,
+   "calm": 0.6008771929824561,
+   "happy": 0.5126760563380282,
+   "sad": 0.2654320987654321,
+   "angry": 0.6,
+   "fearful": 0.44571428571428573,
+   "disgust": 0.5393794749403341,
+   "surprised": 0.5593667546174143
+  },
+  "s3": {
+   "neutral": 0.272108843537415,
+   "calm": 0.6403712296983759,
+   "happy": 0.5620253164556962,
+   "sad": 0.31521739130434784,
+   "angry": 0.6142506142506142,
+   "fearful": 0.5489130434782609,
+   "disgust": 0.5569620253164557,
+   "surprised": 0.6449864498644986
+  },
+  "baseline_svm": {
+   "neutral": 0.45595854922279794,
+   "calm": 0.6528497409326425,
+   "happy": 0.5828877005347594,
+   "sad": 0.37628865979381443,
+   "angry": 0.636604774535809,
+   "fearful": 0.5432692307692307,
+   "disgust": 0.6246851385390428,
+   "surprised": 0.6361031518624641
+  },
+  "baseline_rf": {
+   "neutral": 0.37254901960784315,
+   "calm": 0.6343612334801763,
+   "happy": 0.4972972972972973,
+   "sad": 0.2572347266881029,
+   "angry": 0.6526315789473685,
+   "fearful": 0.423728813559322,
+   "disgust": 0.558891454965358,
+   "surprised": 0.5935828877005348
+  },
+  "baseline_mlp": {
+   "neutral": 0.07476635514018691,
+   "calm": 0.6169354838709677,
+   "happy": 0.5670886075949367,
+   "sad": 0.25958702064896755,
+   "angry": 0.6262626262626263,
+   "fearful": 0.5344352617079889,
+   "disgust": 0.5611510791366906,
+   "surprised": 0.6376021798365122
+  },
+  "ablation_mi_rf": {
+   "neutral": 0.3739130434782609,
+   "calm": 0.6349892008639308,
+   "happy": 0.5193370165745856,
+   "sad": 0.2356902356902357,
+   "angry": 0.6057441253263708,
+   "fearful": 0.46153846153846156,
+   "disgust": 0.5721040189125296,
+   "surprised": 0.5307262569832403
+  },
+  "ablation_rfe_svm": {
+   "neutral": 0.4366812227074236,
+   "calm": 0.6842105263157895,
+   "happy": 0.5983827493261455,
+   "sad": 0.3817204301075269,
+   "angry": 0.680628272251309,
+   "fearful": 0.5463917525773195,
+   "disgust": 0.6428571428571429,
+   "surprised": 0.6338797814207651
+  }
+ },
+ "data": {
+  "pitch_fallback": 13,
+  "dur_min": 2.94,
+  "dur_max": 5.27,
+  "trim_pct": 49
+ },
+ "mcnemar": [
+  {
+   "Model A": "Baseline SVM (all features)",
+   "Model B": "S1: MI + SVM",
+   "Acc A": 0.569,
+   "Acc B": 0.538,
+   "Only A correct": 144,
+   "Only B correct": 99,
+   "p-value": 0.004663187385186948,
+   "Holm-adjusted p": 0.018652749540747793,
+   "Significant (Holm, \u03b1=0.05)": true
+  },
+  {
+   "Model A": "Baseline RF (all features)",
+   "Model B": "S2: RFE + RF",
+   "Acc A": 0.517,
+   "Acc B": 0.499,
+   "Only A correct": 103,
+   "Only B correct": 76,
+   "p-value": 0.051671861946843665,
+   "Holm-adjusted p": 0.155015585840531,
+   "Significant (Holm, \u03b1=0.05)": false
+  },
+  {
+   "Model A": "Baseline MLP (all features)",
+   "Model B": "S3: GA + MLP",
+   "Acc A": 0.533,
+   "Acc B": 0.543,
+   "Only A correct": 121,
+   "Only B correct": 135,
+   "p-value": 0.4165571874932289,
+   "Holm-adjusted p": 0.8331143749864578,
+   "Significant (Holm, \u03b1=0.05)": false
+  },
+  {
+   "Model A": "S1: MI + SVM",
+   "Model B": "S2: RFE + RF",
+   "Acc A": 0.538,
+   "Acc B": 0.499,
+   "Only A correct": 206,
+   "Only B correct": 149,
+   "p-value": 0.002904336631965851,
+   "Holm-adjusted p": 0.014521683159829256,
+   "Significant (Holm, \u03b1=0.05)": true
+  },
+  {
+   "Model A": "S1: MI + SVM",
+   "Model B": "S3: GA + MLP",
+   "Acc A": 0.538,
+   "Acc B": 0.543,
+   "Only A correct": 171,
+   "Only B correct": 178,
+   "p-value": 0.7481319268834685,
+   "Holm-adjusted p": 0.8331143749864578,
+   "Significant (Holm, \u03b1=0.05)": false
+  },
+  {
+   "Model A": "S2: RFE + RF",
+   "Model B": "S3: GA + MLP",
+   "Acc A": 0.499,
+   "Acc B": 0.543,
+   "Only A correct": 151,
+   "Only B correct": 215,
+   "p-value": 0.0009650471928174055,
+   "Holm-adjusted p": 0.005790283156904433,
+   "Significant (Holm, \u03b1=0.05)": true
+  }
+ ],
+ "leak": {
+  "SVM (RBF)|Random split (actors shared)": 0.7659722222222223,
+  "SVM (RBF)|Speaker-independent (ours)": 0.56875,
+  "Random Forest|Random split (actors shared)": 0.6458333333333334,
+  "Random Forest|Speaker-independent (ours)": 0.5166666666666667
+ },
+ "stability": {
+  "S1: MI + SVM": 0.604,
+  "S2: RFE + RF": 0.461,
+  "S3: GA + MLP": 0.476
+ },
+ "stable": {
+  "s1": [
+   "centroid_mean",
+   "chroma_09_mean",
+   "chroma_10_mean",
+   "contrast_02_mean",
+   "contrast_03_mean",
+   "contrast_04_mean",
+   "contrast_04_std",
+   "contrast_05_mean",
+   "contrast_06_mean",
+   "contrast_06_std",
+   "duration_s",
+   "f0_max",
+   "f0_mean",
+   "f0_min",
+   "f0_range",
+   "f0_std",
+   "flatness_mean",
+   "flatness_std",
+   "mfcc_01_std",
+   "mfcc_02_mean",
+   "mfcc_02_std",
+   "mfcc_03_mean",
+   "mfcc_04_mean",
+   "mfcc_04_std",
+   "mfcc_05_mean",
+   "mfcc_05_std",
+   "mfcc_06_mean",
+   "mfcc_06_std",
+   "mfcc_08_std",
+   "mfcc_09_mean",
+   "mfcc_10_mean",
+   "mfcc_11_mean",
+   "mfcc_12_std",
+   "mfcc_14_mean",
+   "mfcc_14_std",
+   "mfcc_15_std",
+   "mfcc_16_std",
+   "mfcc_17_mean",
+   "mfcc_17_std",
+   "mfcc_18_mean",
+   "mfcc_18_std",
+   "mfcc_19_std",
+   "mfcc_20_std",
+   "mfcc_d1_01_mean",
+   "mfcc_d1_01_std",
+   "mfcc_d1_02_std",
+   "mfcc_d1_03_std",
+   "mfcc_d1_04_mean",
+   "mfcc_d1_05_std",
+   "mfcc_d1_06_std",
+   "mfcc_d1_07_std",
+   "mfcc_d1_08_std",
+   "mfcc_d1_12_std",
+   "mfcc_d1_14_std",
+   "mfcc_d1_15_std",
+   "mfcc_d1_16_std",
+   "mfcc_d1_17_std",
+   "mfcc_d1_18_std",
+   "mfcc_d1_19_std",
+   "mfcc_d1_20_std",
+   "mfcc_d2_01_std",
+   "mfcc_d2_02_std",
+   "mfcc_d2_03_std",
+   "mfcc_d2_05_std",
+   "mfcc_d2_06_std",
+   "mfcc_d2_07_mean",
+   "mfcc_d2_07_std",
+   "mfcc_d2_08_std",
+   "mfcc_d2_12_std",
+   "mfcc_d2_13_std",
+   "mfcc_d2_14_mean",
+   "mfcc_d2_14_std",
+   "mfcc_d2_15_std",
+   "mfcc_d2_16_std",
+   "mfcc_d2_17_std",
+   "mfcc_d2_18_std",
+   "mfcc_d2_19_std",
+   "mfcc_d2_20_mean",
+   "mfcc_d2_20_std",
+   "rolloff_mean",
+   "rolloff_std",
+   "tonnetz_02_std",
+   "tonnetz_03_std",
+   "voiced_ratio",
+   "zcr_mean"
+  ],
+  "s2": [
+   "centroid_mean",
+   "contrast_02_mean",
+   "contrast_03_mean",
+   "contrast_04_mean",
+   "contrast_06_mean",
+   "contrast_06_std",
+   "duration_s",
+   "f0_max",
+   "f0_mean",
+   "f0_min",
+   "f0_range",
+   "f0_std",
+   "flatness_mean",
+   "flatness_std",
+   "mfcc_01_mean",
+   "mfcc_02_mean",
+   "mfcc_02_std",
+   "mfcc_03_mean",
+   "mfcc_04_std",
+   "mfcc_05_mean",
+   "mfcc_05_std",
+   "mfcc_06_std",
+   "mfcc_19_std",
+   "mfcc_d1_01_std",
+   "mfcc_d1_02_std",
+   "mfcc_d1_04_mean",
+   "mfcc_d1_05_std",
+   "mfcc_d1_06_std",
+   "mfcc_d1_09_mean",
+   "mfcc_d2_01_std",
+   "mfcc_d2_03_std",
+   "mfcc_d2_04_std",
+   "mfcc_d2_06_std",
+   "mfcc_d2_18_std",
+   "mfcc_d2_19_std",
+   "mfcc_d2_20_std",
+   "rolloff_mean",
+   "rolloff_std",
+   "voiced_ratio"
+  ],
+  "s3": [
+   "centroid_mean",
+   "chroma_02_std",
+   "chroma_03_mean",
+   "chroma_04_mean",
+   "chroma_04_std",
+   "chroma_06_std",
+   "chroma_07_mean",
+   "chroma_07_std",
+   "chroma_08_mean",
+   "chroma_10_std",
+   "contrast_02_mean",
+   "contrast_02_std",
+   "contrast_03_mean",
+   "contrast_03_std",
+   "contrast_04_mean",
+   "contrast_05_mean",
+   "contrast_06_std",
+   "contrast_07_mean",
+   "f0_max",
+   "f0_mean",
+   "f0_min",
+   "f0_range",
+   "f0_std",
+   "flatness_mean",
+   "mfcc_01_mean",
+   "mfcc_02_mean",
+   "mfcc_03_mean",
+   "mfcc_04_mean",
+   "mfcc_04_std",
+   "mfcc_05_mean",
+   "mfcc_05_std",
+   "mfcc_07_mean",
+   "mfcc_07_std",
+   "mfcc_08_mean",
+   "mfcc_09_mean",
+   "mfcc_09_std",
+   "mfcc_10_mean",
+   "mfcc_12_std",
+   "mfcc_13_std",
+   "mfcc_14_std",
+   "mfcc_15_std",
+   "mfcc_16_mean",
+   "mfcc_16_std",
+   "mfcc_18_std",
+   "mfcc_19_std",
+   "mfcc_d1_02_mean",
+   "mfcc_d1_03_mean",
+   "mfcc_d1_03_std",
+   "mfcc_d1_04_mean",
+   "mfcc_d1_05_mean",
+   "mfcc_d1_05_std",
+   "mfcc_d1_07_mean",
+   "mfcc_d1_07_std",
+   "mfcc_d1_08_std",
+   "mfcc_d1_09_mean",
+   "mfcc_d1_09_std",
+   "mfcc_d1_11_mean",
+   "mfcc_d1_12_mean",
+   "mfcc_d1_13_mean",
+   "mfcc_d1_13_std",
+   "mfcc_d1_14_mean",
+   "mfcc_d1_14_std",
+   "mfcc_d1_15_mean",
+   "mfcc_d1_15_std",
+   "mfcc_d1_18_mean",
+   "mfcc_d1_18_std",
+   "mfcc_d1_19_mean",
+   "mfcc_d1_20_std",
+   "mfcc_d2_01_std",
+   "mfcc_d2_02_mean",
+   "mfcc_d2_02_std",
+   "mfcc_d2_04_std",
+   "mfcc_d2_05_mean",
+   "mfcc_d2_07_mean",
+   "mfcc_d2_08_mean",
+   "mfcc_d2_10_mean",
+   "mfcc_d2_10_std",
+   "mfcc_d2_13_std",
+   "mfcc_d2_14_mean",
+   "mfcc_d2_14_std",
+   "mfcc_d2_18_std",
+   "mfcc_d2_19_std",
+   "mfcc_d2_20_std",
+   "rms_max",
+   "rms_mean",
+   "rms_std",
+   "rolloff_mean",
+   "rolloff_std",
+   "tonnetz_01_mean",
+   "tonnetz_01_std",
+   "tonnetz_02_mean",
+   "tonnetz_05_mean",
+   "tonnetz_05_std",
+   "voiced_ratio",
+   "zcr_std"
+  ]
+ },
+ "stable_common": [
+  "centroid_mean",
+  "contrast_02_mean",
+  "contrast_03_mean",
+  "contrast_04_mean",
+  "contrast_06_std",
+  "f0_max",
+  "f0_mean",
+  "f0_min",
+  "f0_range",
+  "f0_std",
+  "flatness_mean",
+  "mfcc_02_mean",
+  "mfcc_03_mean",
+  "mfcc_04_std",
+  "mfcc_05_mean",
+  "mfcc_05_std",
+  "mfcc_19_std",
+  "mfcc_d1_04_mean",
+  "mfcc_d1_05_std",
+  "mfcc_d2_01_std",
+  "mfcc_d2_18_std",
+  "mfcc_d2_19_std",
+  "mfcc_d2_20_std",
+  "rolloff_mean",
+  "rolloff_std",
+  "voiced_ratio"
+ ],
+ "family_share": {
+  "s1": {
+   "MFCC": 26.9,
+   "MFCC \u0394\u0394": 22.0,
+   "MFCC \u0394": 21.8,
+   "Spectral contrast": 7.7,
+   "Chroma": 5.7,
+   "Pitch": 5.6,
+   "Spectral shape": 5.1,
+   "Tonnetz": 2.6,
+   "Energy": 1.6,
+   "Duration": 1.0
+  },
+  "s2": {
+   "MFCC": 26.0,
+   "MFCC \u0394": 19.0,
+   "MFCC \u0394\u0394": 17.8,
+   "Spectral contrast": 10.5,
+   "Pitch": 8.8,
+   "Spectral shape": 8.0,
+   "Chroma": 4.8,
+   "Tonnetz": 2.5,
+   "Duration": 1.5,
+   "Energy": 1.2
+  },
+  "s3": {
+   "MFCC \u0394": 22.2,
+   "MFCC": 21.7,
+   "MFCC \u0394\u0394": 18.6,
+   "Chroma": 10.6,
+   "Spectral contrast": 7.7,
+   "Tonnetz": 5.9,
+   "Pitch": 4.8,
+   "Spectral shape": 4.6,
+   "Energy": 3.4,
+   "Duration": 0.5
+  },
+  "all": {
+   "MFCC": 21.1,
+   "MFCC \u0394": 21.1,
+   "MFCC \u0394\u0394": 21.1,
+   "Chroma": 12.6,
+   "Spectral contrast": 7.4,
+   "Tonnetz": 6.3,
+   "Spectral shape": 4.2,
+   "Pitch": 3.2,
+   "Energy": 2.6,
+   "Duration": 0.5
+  }
+ },
+ "n_features": 190
+}

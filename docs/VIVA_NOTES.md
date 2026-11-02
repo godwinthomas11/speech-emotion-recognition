@@ -135,3 +135,23 @@ Yes, in `src/ser/ga_selector.py` in about 130 lines of NumPy, so every step can 
 - **"Each solution changes both the selector and the classifier. Isn't that unfair?"** Each solution is compared with the same classifier on all features, and the 2 × 2 swap (MI + RF, RFE + SVM) in notebook 06, §6 separates the two effects.
 - **"Is the selection stable?"** See the mean pairwise Jaccard index per method (notebook 06, §5).
 - **"Limitations?"** Acted speech (not spontaneous), one language, peak normalisation removes absolute loudness, and only hand-crafted features.
+
+---
+
+## Final numbers to remember
+
+Macro-F1 on unseen actors (6-fold, speaker-independent):
+
+| | All 190 features | With selection | Features kept |
+|---|---|---|---|
+| SVM / S1 (MI) | 0.554 | 0.522 | 102 |
+| RF / S2 (RFE) | 0.492 | 0.473 | 67 |
+| MLP / S3 (GA) | 0.473 | 0.511 | 108 |
+
+- **Selection removes 43–65 % of the features.** It helps the MLP (+0.037) and costs the SVM and RF a few points.
+- **S1 ≈ S3 > S2** (McNemar with Holm correction: S1 vs S2 p = 0.015, S2 vs S3 p = 0.006, S1 vs S3 p = 0.83).
+- **Highest macro-F1:** SVM on the RFE features, 0.568 (post-hoc swap, not significance-tested).
+- **Random split vs ours:** SVM 76.6 % vs 56.9 % accuracy, 20 points of inflation.
+- **Easiest emotions:** calm and angry. **Hardest:** sad, then neutral (fewest clips).
+- **Stability (Jaccard):** MI 0.60, GA 0.48, RFE 0.46. All 6 pitch features are chosen by all three methods.
+- **If asked "why is the MLP baseline weak?"** Inner CV picked very strong regularisation (α = 10) for all 190 features, which crushed the neutral class (F1 0.07). On the GA subset, milder α worked (neutral F1 0.27).

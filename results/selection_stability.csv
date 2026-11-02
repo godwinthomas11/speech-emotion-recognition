@@ -1,0 +1,4 @@
+,mean pairwise Jaccard across folds
+S1: MI + SVM,0.604
+S2: RFE + RF,0.461
+S3: GA + MLP,0.476
