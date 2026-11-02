@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Raw audio is not committed (≈200 MB). Download it with the steps in README.md.
+data/raw/
+data/download/
+
+# Editor / OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Build leftovers
+*.egg-info/
