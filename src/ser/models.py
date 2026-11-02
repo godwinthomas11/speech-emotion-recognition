@@ -24,7 +24,7 @@ def make_mlp(k, hidden=(128,), alpha=1e-2):
                          n_iter_no_change=20, random_state=RANDOM_STATE)
 
 
-SVM_GRID = {"C": [1.0, 3.0, 10.0, 30.0], "gamma_mult": [0.5, 1.0, 2.0]}
+SVM_GRID = {"C": [0.3, 1.0, 3.0, 10.0, 30.0], "gamma_mult": [0.25, 0.5, 1.0, 2.0]}
 RF_GRID = {"min_samples_leaf": [1, 3], "max_features": ["sqrt", 0.2]}
-MLP_GRID = {"hidden": [(128,), (256, 128)], "alpha": [1e-3, 1e-2, 1e-1]}
+MLP_GRID = {"hidden": [(128,), (256, 128)], "alpha": [1e-3, 1e-2, 1e-1, 1.0, 3.0, 10.0]}
 K_GRID = [10, 20, 30, 40, 50, 60, 80, 100, 120, 150, 190]

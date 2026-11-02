@@ -10,6 +10,7 @@ Protocol (nested cross-validation):
   never on the test actors. This prevents selection bias.
 """
 import itertools
+import re
 import json
 import time
 from dataclasses import dataclass, field
@@ -118,7 +119,7 @@ class RunResult:
 
     def save(self):
         RESULTS_DIR.mkdir(exist_ok=True)
-        slug = self.name.split(":")[0].strip().lower().replace(" ", "_")
+        slug = re.sub(r"[^a-z0-9]+", "_", self.name.split(":")[0].strip().lower()).strip("_")
         self.folds.to_csv(RESULTS_DIR / f"{slug}_folds.csv", index=False)
         self.oof.to_csv(RESULTS_DIR / f"{slug}_oof.csv", index=False)
         if not self.inner_curve.empty:
@@ -145,7 +146,7 @@ def _eval_inner(Xtr, ytr, order, make_model, params, k):
 
 
 def nested_ranked_cv(name, X, y, actors, feature_names, ranker, make_model, param_grid,
-                     k_grid, files=None, n_jobs=4, outer_curve=True, verbose=True):
+                     k_grid, files=None, n_jobs=4, outer_curve=True, one_se=True, verbose=True):
     """Nested speaker-independent CV for a ranking-based feature selector.
 
     ranker(X, y)              -> feature indices ordered best to worst
@@ -158,8 +159,8 @@ def nested_ranked_cv(name, X, y, actors, feature_names, ranker, make_model, para
     for fold, tr, te in outer_splits(actors):
         t0 = time.time()
         # ---- inner loop: choose k and model settings on training actors only
-        inner = np.zeros((len(params_list), len(k_grid)))
-        for itr, iva in inner_splits(actors[tr]):
+        per_split = np.zeros((N_INNER, len(params_list), len(k_grid)))
+        for s_i, (itr, iva) in enumerate(inner_splits(actors[tr])):
             a, b = tr[itr], tr[iva]
             sc = StandardScaler().fit(X[a])
             Xa, Xb = sc.transform(X[a]), sc.transform(X[b])
@@ -169,11 +170,20 @@ def nested_ranked_cv(name, X, y, actors, feature_names, ranker, make_model, para
                 delayed(_eval_inner)((Xa, Xb), (y[a], y[b]), order, make_model, params_list[pi], k_grid[ki])
                 for pi, ki in jobs)
             for (pi, ki), r in zip(jobs, res):
-                inner[pi, ki] += r / N_INNER
+                per_split[s_i, pi, ki] = r
+        inner = per_split.mean(axis=0)
         best_p, best_k = np.unravel_index(np.argmax(inner), inner.shape)
+        k_best_raw = k_grid[best_k]
+        if one_se and len(k_grid) > 1:
+            # One-standard-error rule (Hastie et al., ESL 7.10): take the smallest k whose
+            # best inner score is within one standard error of the overall best.
+            se = per_split[:, best_p, best_k].std(ddof=1) / np.sqrt(N_INNER)
+            best_per_k = inner.max(axis=0)
+            best_k = int(np.flatnonzero(best_per_k >= inner[best_p, best_k] - se)[0])
+            best_p = int(np.argmax(inner[:, best_k]))
         params, k = params_list[best_p], k_grid[best_k]
         for ki, kk in enumerate(k_grid):
-            inner_rows.append({"fold": fold, "k": kk, "inner_macro_f1": inner[best_p, ki]})
+            inner_rows.append({"fold": fold, "k": kk, "inner_macro_f1": inner[:, ki].max()})
 
         # ---- outer fit with the chosen settings
         sc = StandardScaler().fit(X[tr])
@@ -191,7 +201,7 @@ def nested_ranked_cv(name, X, y, actors, feature_names, ranker, make_model, para
 
         s = scores(y[te], pred)
         fold_rows.append({"fold": fold, "test_actors": " ".join(map(str, sorted(set(actors[te])))),
-                          **s, "n_features": k, "params": json.dumps(params),
+                          **s, "n_features": k, "k_best_inner": k_best_raw, "params": json.dumps(params),
                           "select_seconds": rank_seconds, "fit_seconds": fit_seconds,
                           "predict_ms_per_clip": pred_ms, "fold_seconds": time.time() - t0})
         oof.append(pd.DataFrame({"file": None if files is None else np.asarray(files)[te],
@@ -229,6 +239,8 @@ def _eval_mask_params(X, y, splits, cols, make_model, params):
 
 def nested_ga_cv(name, X, y, actors, feature_names, make_selector, make_model, param_grid,
                  files=None, n_jobs=4, verbose=True):
+    """make_selector(fitness_params) -> GA selector. Before the GA starts, the classifier's
+    settings are tuned on all features with the inner folds, and the GA's fitness uses them."""
     """GA selects a feature mask on the training actors; the classifier is then
     tuned on that mask (same inner folds) and tested once on the unseen actors."""
     X, y, actors = np.asarray(X, float), np.asarray(y), np.asarray(actors)
@@ -240,8 +252,14 @@ def nested_ga_cv(name, X, y, actors, feature_names, make_selector, make_model, p
         splits = inner_splits(actors[tr])
         if verbose:
             print(f"[{name}] fold {fold + 1}/{N_OUTER}: running GA ...")
+        all_cols = np.arange(X.shape[1])
+        res0 = Parallel(n_jobs=n_jobs)(
+            delayed(_eval_mask_params)(X[tr], y[tr], splits, all_cols, make_model, p) for p in params_list)
+        fitness_params = params_list[int(np.argmax(res0))]
+        if verbose:
+            print(f"  fitness model settings (tuned on all features): {fitness_params}")
         t_sel = time.time()
-        ga = make_selector().fit(X[tr], y[tr], splits)
+        ga = make_selector(fitness_params).fit(X[tr], y[tr], splits)
         select_seconds = time.time() - t_sel
         cols = np.flatnonzero(ga.support_)
         hist = pd.DataFrame(ga.history_).assign(fold=fold)
@@ -266,6 +284,7 @@ def nested_ga_cv(name, X, y, actors, feature_names, make_selector, make_model, p
                           **s, "n_features": len(cols), "params": json.dumps(params),
                           "select_seconds": select_seconds, "fit_seconds": fit_seconds,
                           "predict_ms_per_clip": pred_ms, "fold_seconds": time.time() - t0,
+                          "fitness_params": json.dumps(fitness_params),
                           "ga_generations": len(ga.history_) - 1, "ga_evaluations": ga.n_evaluations_,
                           "ga_best_fitness": ga.best_fitness_})
         oof.append(pd.DataFrame({"file": None if files is None else np.asarray(files)[te],
